@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}Chain Explorer Light{% endblock %}
+
+{% block body %}
+{% for flashMessage in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+
+{% for flashMessage in app.flashes('error') %}
+    <div class="alert alert-danger">
+            {{ flashMessage }}
+    </div>
+{% endfor %}
+<div class="container">
+  <h1>Chain Explorer Light</h1>
+ 
+  {% if form %}
+  <div class="mt-4">
+    <h2>Result</h2>
+      {{ form_start(form) }}
+      {{ form_widget(form) }}      
+      {{ form_end(form) }}
+  </div>
+  {% endif %}
+  
+  {% if transactions is defined %}
+  {% for transaction in transactions %}
+  <div class="mt-4">
+    <h2>Transaction</h2>
+    <p>Hash: {{ transaction.block_hash }}</p>
+    <p>Addresses: {{ transaction.addresses|join(', ') }}</p>    
+   {% endfor %}
+  {% endif %}
+
+
+</div>
+{% endblock %}
+
+     
+    
+
+    
