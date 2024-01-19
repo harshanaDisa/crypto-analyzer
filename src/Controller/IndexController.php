@@ -70,7 +70,7 @@ class IndexController extends AbstractController {
                 });
             }
 
-            if($threshold !== null) {
+            if($threshold !== null && $threshold > 0) {
                 $transactions = array_slice($transactions, 0, $threshold);
             }
 
