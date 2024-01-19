@@ -2,7 +2,6 @@
 namespace App\Controller;
 
 
-use Doctrine\ORM\EntityManagerInterface;
 use App\Service\CryptoTransactionService;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Question\Question;
