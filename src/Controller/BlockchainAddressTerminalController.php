@@ -56,7 +56,7 @@ class BlockchainAddressTerminalController extends Command
 
         // Write the output to the terminal
         foreach ($transactions as $transaction) {
-            $output->writeln($transaction->hash);
+            $output->writeln($transaction->getHash());
         }
 
         return Command::SUCCESS;

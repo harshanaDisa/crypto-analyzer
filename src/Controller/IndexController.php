@@ -43,11 +43,17 @@ class IndexController extends AbstractController {
 
 
             $transactions = $cryptoTransactionService->analyzeAndProcessTransactions($network, $asset, $version, $address);
+            //dd($transactions);
+            
             if($fromDate) {
                 $transactions = array_filter($transactions, function ($transaction) use ($fromDate, $toDate) {
                     // Assuming $transaction->getDate() returns a DateTime object
-                    $transactionDate = new \DateTime($transaction->getConfirmed());
-                
+                    $transactionDate = $transaction->getConfirmed();
+
+                    if(!($transaction->getConfirmed() instanceof \datetime )) {
+                        $transactionDate = new \DateTime($transaction->getConfirmed());
+                    }
+                  
                     // Define the start and end dates of the range
                     $startDate = new \DateTime($fromDate);
                     if($toDate == null) {

@@ -25,43 +25,45 @@ class CryptoTransactionService
 
     public function analyzeAndProcessTransactions($network, $asset, $version, $address)
     {
-        $txs = $this->cryptoAnalyseService->getTransactionsForAddress($network, $asset, $version, $address);
+ 
 
-        foreach ($txs as $tx) {
-            $confirmedDate = $tx->confirmed;
-                
-            // Check if the transaction already exists in the database
-            $existingTransaction = $this->entityManager->getRepository(Transaction::class)->findOneBy([
-                'address' => $address,
-                'asset' => $asset,
+            // Try to find the transaction in the database
+            $transactionsData = $this->entityManager->getRepository(Transaction::class)->findBy([
                 'network' => $network,
+                'asset' => $asset,
                 'version' => $version,
-                'confirmedDate' => new \DateTime($confirmedDate),
+                'address' => $address
             ]);
-    
-            if ($existingTransaction) {
-                // If the transaction already exists, skip to the next iteration
-                continue;
-            }
-            
-    
-            try {
-                $transaction = new Transaction();
-                $transaction->setAddress($address);
-                $transaction->setAsset($asset);
-                $transaction->setNetwork($network);
-                $transaction->setVersion($version);
-                $transaction->setConfirmedDate(new \DateTime($confirmedDate));
-                $transaction->setHash($tx->hash);
-    
-                $this->entityManager->persist($transaction);
-                $this->entityManager->flush();
-            } catch (UniqueConstraintViolationException $e) {
-               $this->logger->error(''. $e->getMessage());
-            }
-        }
 
-        return $txs;
+            
+            // If the transaction doesn't exist in the database
+            if (!count($transactionsData) > 0) {
+  
+                // Use the cryptoAnalyseService to get the transaction
+                $transactionsData = $this->cryptoAnalyseService->getTransactionsForAddress($network, $asset, $version, $address);
+                foreach ($transactionsData as $tx) {
+                    $confirmedDate = $tx->confirmed;
+                        
+                    
+                try {
+                    $transaction = new Transaction();
+                    $transaction->setAddress($address);
+                    $transaction->setAsset($asset);
+                    $transaction->setNetwork($network);
+                    $transaction->setVersion($version);
+                    $transaction->setConfirmedDate(new \DateTime($confirmedDate));
+                    $transaction->setHash($tx->hash);
+        
+                    $this->entityManager->persist($transaction);
+                    $this->entityManager->flush();
+                } catch (UniqueConstraintViolationException $e) {
+                   $this->logger->error(''. $e->getMessage());
+                }
+            }           
+
+        }
+        return $transactionsData;
+
 
 
     }

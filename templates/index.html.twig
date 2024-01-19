@@ -33,8 +33,8 @@
 
   {% for transaction in transactions %}
   <div class="mt-4">
-    <p>Hash: {{ transaction.block_hash }}</p>
-    <p>Addresses: {{ transaction.addresses|join(', ') }}</p>    
+    <p>Hash: {{ transaction.hash }}</p>
+        
    {% endfor %}
   {% endif %}
 

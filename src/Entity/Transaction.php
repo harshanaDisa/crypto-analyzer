@@ -151,5 +151,12 @@ class Transaction
         return $this->hash;
     }
 
+    public function getConfirmed() {
+        // return the confirmed value
+        return $this->confirmedDate;
+    }
+
+
+
  
 }
