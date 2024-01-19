@@ -13,7 +13,7 @@ use_dns_when_possible: true
 composer_version: "2"
 
 web_environment:
- - BLOCKCYPHER_TOKEN=put_your_token_here
+ - BLOCKCYPHER_TOKEN=5b8b1397d0ec454cbe8d6e1fdd2f698f
 
 
 
