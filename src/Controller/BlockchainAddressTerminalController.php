@@ -49,10 +49,15 @@ class BlockchainAddressTerminalController extends Command
         $transactions = $this->cryptotransactionService->analyzeAndProcessTransactions($network, $asset, $version, $address);
 
 
+        // Count the transactions
+        $transactionCount = count($transactions);
         // Make app calls to blockcypher using the address client
+        $output->writeln("Number of transactions: " . $transactionCount);
 
         // Write the output to the terminal
-        $output->writeln($transactions);
+        foreach ($transactions as $transaction) {
+            $output->writeln($transaction->hash);
+        }
 
         return Command::SUCCESS;
     }

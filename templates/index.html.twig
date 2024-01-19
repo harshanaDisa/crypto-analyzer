@@ -28,9 +28,11 @@
   {% endif %}
   
   {% if transactions is defined %}
+  <h3>Result</h3>
+  {{ transactions|length }} TX
+
   {% for transaction in transactions %}
   <div class="mt-4">
-    <h2>Transaction</h2>
     <p>Hash: {{ transaction.block_hash }}</p>
     <p>Addresses: {{ transaction.addresses|join(', ') }}</p>    
    {% endfor %}

@@ -29,7 +29,7 @@ class CryptoTransactionService
 
         foreach ($txs as $tx) {
             $confirmedDate = $tx->confirmed;
-    
+                
             // Check if the transaction already exists in the database
             $existingTransaction = $this->entityManager->getRepository(Transaction::class)->findOneBy([
                 'address' => $address,
@@ -43,6 +43,7 @@ class CryptoTransactionService
                 // If the transaction already exists, skip to the next iteration
                 continue;
             }
+            
     
             try {
                 $transaction = new Transaction();
@@ -51,6 +52,7 @@ class CryptoTransactionService
                 $transaction->setNetwork($network);
                 $transaction->setVersion($version);
                 $transaction->setConfirmedDate(new \DateTime($confirmedDate));
+                $transaction->setHash($tx->hash);
     
                 $this->entityManager->persist($transaction);
                 $this->entityManager->flush();

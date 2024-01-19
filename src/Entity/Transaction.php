@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TransactionRepository")
  * @ORM\Table(name="transaction", uniqueConstraints={
- *     @ORM\UniqueConstraint(name="address_date_asset_version_network_unique", columns={"asset","address","version","network", "confirmed_date"})
+ *     @ORM\UniqueConstraint(name="address_date_asset_version_network_unique", columns={"asset","address","version","network", "confirmed_date", "hash"})
  * })
  */
 class Transaction
@@ -44,6 +44,15 @@ class Transaction
      * @ORM\Column(type="datetime")
      */
     private $confirmedDate;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $hash;
+
+
+
+
 
     public function __construct() {
         $this->network = 'main';
@@ -129,4 +138,18 @@ class Transaction
 
         return $this;
     }
+
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
+
+        return $this;
+    }
+
+    public function getHash()
+    {
+        return $this->hash;
+    }
+
+ 
 }
