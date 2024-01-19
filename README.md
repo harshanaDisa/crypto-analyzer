@@ -13,8 +13,9 @@ Add your Api Key in your .ddev/config.yaml
 
 ```
 ddev start
-ddev composer install
-ddev php bin/console doctrine:migrations:migrate
-ddev describe
+
+ddev php bin/console blockchain:address:full
 ```
+
+https://crypto-analyzer.ddev.site/
 

@@ -1,8 +1,7 @@
 <?php
 namespace App\Controller;
 
-use App\Service\TransactionService;
-use App\Service\CryptoAnalyseService;
+
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\CryptoTransactionService;
 use Symfony\Component\Console\Command\Command;
@@ -11,16 +10,14 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 
-class TerminalController extends Command
+class BlockchainAddressTerminalController extends Command
 {
 
-    private $entityManager;
 
     private $cryptotransactionService;
 
-    public function __construct(EntityManagerInterface $entityManager, CryptoTransactionService $cryptotransactionService)
+    public function __construct(CryptoTransactionService $cryptotransactionService)
     {
-        $this->entityManager = $entityManager;
         $this->cryptotransactionService = $cryptotransactionService;
 
         parent::__construct();
@@ -29,8 +26,8 @@ class TerminalController extends Command
     protected function configure()
     {
         $this
-            ->setName('app:terminal-command')
-            ->setDescription('Description of the command');
+            ->setName('blockchain:address:full')
+            ->setDescription('all information available about a particular address');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
