@@ -262,8 +262,11 @@ webimage_extra_packages: [php7.4-gmp]
 # and you can't erase existing hooks or all environment variables.
 # However, with "override_config: true" in a particular config.*.yaml file,
 # 'use_dns_when_possible: false' can override the existing values, and
-# hooks:
-#   post-start: []
+hooks:
+   post-start:
+    - exec: composer install
+    - exec: php bin/console doctrine:migrations:migrate
+    
 # or
 # web_environment: []
 # or
