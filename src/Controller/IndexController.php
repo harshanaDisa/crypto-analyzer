@@ -44,9 +44,7 @@ class IndexController extends AbstractController {
             $version = "v1";
 
 
-            $transactions = $cryptoTransactionService->analyzeAndProcessTransactions($network, $asset, $version, $address);
-            //dd($transactions);
-            
+            $transactions = $cryptoTransactionService->analyzeAndProcessTransactions($network, $asset, $version, $address);            
             $counter = 0;
             if($fromDate) {
                 $transactions = array_filter($transactions, function ($transaction) use ($fromDate, $toDate, $threshold, $counter) {
