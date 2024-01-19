@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ResetType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class CryptoAnalyseType extends AbstractType
@@ -41,7 +42,7 @@ class CryptoAnalyseType extends AbstractType
 
                           
             ])
-             ->add('toDate', DateType::class, [ 
+            ->add('toDate', DateType::class, [ 
                 'label'=> 'To Date',
                 'widget' => 'single_text',
                 'attr' => [
@@ -50,9 +51,12 @@ class CryptoAnalyseType extends AbstractType
                 'required' => false,
                 'mapped' => false
 
-
-                ])         
-
+                ])  
+            ->add('threshold', NumberType::class, [
+                    'label' => 'Threshold',
+                    'mapped' => false,
+                    'required' => false
+            ])
             ->add('save', SubmitType::class, [
                 'label' => 'Analyze',
             ])->add('reset', ResetType::class, [

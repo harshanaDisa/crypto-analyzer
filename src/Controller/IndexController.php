@@ -38,6 +38,8 @@ class IndexController extends AbstractController {
 
             $fromDate = $cryptoAnalyse['fromDate'];
             $toDate = $cryptoAnalyse['toDate'];
+            $threshold = $cryptoAnalyse['threshold'];
+          
             $network = "main";
             $version = "v1";
 
@@ -45,8 +47,9 @@ class IndexController extends AbstractController {
             $transactions = $cryptoTransactionService->analyzeAndProcessTransactions($network, $asset, $version, $address);
             //dd($transactions);
             
+            $counter = 0;
             if($fromDate) {
-                $transactions = array_filter($transactions, function ($transaction) use ($fromDate, $toDate) {
+                $transactions = array_filter($transactions, function ($transaction) use ($fromDate, $toDate, $threshold, $counter) {
                     // Assuming $transaction->getDate() returns a DateTime object
                     $transactionDate = $transaction->getConfirmed();
 
@@ -65,6 +68,10 @@ class IndexController extends AbstractController {
                     // Return true if the transaction date is within the range
                     return $transactionDate >= $startDate && $transactionDate <= $endDate;
                 });
+            }
+
+            if($threshold !== null) {
+                $transactions = array_slice($transactions, 0, $threshold);
             }
 
             // Add a flash message

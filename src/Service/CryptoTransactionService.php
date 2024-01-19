@@ -8,8 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 
 
-
-
 class CryptoTransactionService
 {
     private $cryptoAnalyseService;
@@ -26,7 +24,6 @@ class CryptoTransactionService
     public function analyzeAndProcessTransactions($network, $asset, $version, $address)
     {
  
-
             // Try to find the transaction in the database
             $transactionsData = $this->entityManager->getRepository(Transaction::class)->findBy([
                 'network' => $network,
